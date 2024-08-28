@@ -1,45 +1,30 @@
-from fastapi import FastAPI
-import uvicorn
-import sys
-import os
-from fastapi.templating import Jinja2Templates
-from starlette.responses import RedirectResponse
-from fastapi.responses import Response
-from textSummarization.pipeline.prediction import PredictionPipeline
+import streamlit as st
+from transformers import AutoTokenizer, pipeline
+from textSummarization.pipeline.prediction import PredictionPipeline  # Assuming your PredictionPipeline is in a file named prediction_pipeline.py
 
+# Initialize the Prediction Pipeline
+predictor = PredictionPipeline()
 
-text:str = "What is Text Summarization?"
+# Streamlit app title and description
+st.title("Text Summarization with NLP")
+st.write("This application generates a summary for the given text using a pre-trained NLP model.")
 
-app = FastAPI()
+# Input text area
+input_text = st.text_area("Enter the text you want to summarize:", height=300)
 
-@app.get("/", tags=["authentication"])
-async def index():
-    return RedirectResponse(url="/docs")
+# Summarize button
+if st.button("Summarize"):
+    if input_text:
+        # Generate the summary using the prediction pipeline
+        summary = predictor.predict(input_text)
+        # Display the original text and summary
+        st.subheader("Original Text:")
+        st.write(input_text)
+        
+        st.subheader("Summary:")
+        st.write(summary)
+    else:
+        st.write("Please enter some text to summarize.")
 
-
-
-@app.get("/train")
-async def training():
-    try:
-        os.system("python main.py")
-        return Response("Training successful !!")
-
-    except Exception as e:
-        return Response(f"Error Occurred! {e}")
-    
-
-
-
-@app.post("/predict")
-async def predict_route(text):
-    try:
-
-        obj = PredictionPipeline()
-        text = obj.predict(text)
-        return text
-    except Exception as e:
-        raise e
-    
-
-if __name__=="__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8080)
+# Footer
+st.write("Developed by Jai Dixit")

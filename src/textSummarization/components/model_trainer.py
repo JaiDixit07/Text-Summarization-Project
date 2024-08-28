@@ -14,11 +14,11 @@ class ModelTrainer:
     def __init__(self, config: ModelTrainerConfig):
         self.config = config
 
-    # Legacy -> False done 
+
     
     def train(self):
         device = "cuda" if torch.cuda.is_available() else "cpu"
-        tokenizer = T5Tokenizer.from_pretrained(self.config.model_ckpt,legacy=False)
+        tokenizer = T5Tokenizer.from_pretrained(self.config.model_ckpt)
         model_t5 = T5ForConditionalGeneration.from_pretrained(self.config.model_ckpt).to(device)
         seq2seq_data_collator = DataCollatorForSeq2Seq(tokenizer, model=model_t5)
         
@@ -36,8 +36,8 @@ class ModelTrainer:
 
 
         trainer_args = TrainingArguments(
-            output_dir=self.config.root_dir, num_train_epochs=1, warmup_steps=500,
-            per_device_train_batch_size=1, per_device_eval_batch_size=1,
+            output_dir=self.config.root_dir, num_train_epochs=3, warmup_steps=2000,
+            per_device_train_batch_size=4, per_device_eval_batch_size=1,
             weight_decay=0.01, logging_steps=10,
             evaluation_strategy='steps', eval_steps=500, save_steps=1e6,
             gradient_accumulation_steps=2 , fp16=True,  gradient_checkpointing=True
@@ -50,7 +50,7 @@ class ModelTrainer:
 
         trainer = Trainer(model=model_t5, args=trainer_args,
                   tokenizer=tokenizer, data_collator=seq2seq_data_collator,
-                  train_dataset=dataset_samsum_pt["test"], 
+                  train_dataset=dataset_samsum_pt["train"], 
                   eval_dataset=dataset_samsum_pt["validation"])
         
         trainer.train()
