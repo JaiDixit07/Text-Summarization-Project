@@ -2,8 +2,10 @@ import streamlit as st
 from transformers import T5Tokenizer, T5ForConditionalGeneration
 
 # Load the tokenizer and model from Hugging Face
-tokenizer = T5Tokenizer.from_pretrained("jaidixit07/streamlit_deploy/artifacts/model_trainer/tokenizer")
-model = T5ForConditionalGeneration.from_pretrained("jaidixit07/streamlit_deploy/artifacts/model_trainer/t5-samsum-model")
+model_name = "jaidixit07/streamlit_deploy"
+
+tokenizer = T5Tokenizer.from_pretrained(model_name)
+model = T5ForConditionalGeneration.from_pretrained(model_name)
 
 # Streamlit interface
 st.title("Text Summarization with T5")
