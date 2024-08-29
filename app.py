@@ -1,18 +1,7 @@
 import streamlit as st
 from transformers import T5Tokenizer, T5ForConditionalGeneration
 import os 
-import subprocess
-import sys
 
-def install_packages():
-    # Upgrade 'accelerate' and reinstall 'transformers' and 'accelerate'
-    subprocess.check_call([sys.executable, '-m', 'pip', 'install', '--upgrade', 'accelerate'])
-    subprocess.check_call([sys.executable, '-m', 'pip', 'uninstall', '-y', 'transformers', 'accelerate'])
-    subprocess.check_call([sys.executable, '-m', 'pip', 'install', 'transformers', 'accelerate'])
-
-# Install the packages
-install_packages()
-# Load the tokenizer and model from Hugging Face
 
 os.environ['HUGGINGFACE_TOKEN'] = "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"
 
