@@ -1,11 +1,16 @@
 import streamlit as st
 from transformers import T5Tokenizer, T5ForConditionalGeneration
+import os 
 
 # Load the tokenizer and model from Hugging Face
+
+os.environ['HUGGINGFACE_TOKEN'] = "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"
+
 model_name = "jaidixit07/streamlit_deploy"
 token_name="jaidixit07/token"
-tokenizer = T5Tokenizer.from_pretrained(token_name)
-model = T5ForConditionalGeneration.from_pretrained(model_name)
+tokenizer = T5Tokenizer.from_pretrained(token_name, use_auth_token=os.getenv('HUGGINGFACE_TOKEN'))
+model = T5ForConditionalGeneration.from_pretrained(model_name, use_auth_token=os.getenv('HUGGINGFACE_TOKEN'), timeout=60)
+
 
 # Streamlit interface
 st.title("Text Summarization with T5")
