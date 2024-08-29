@@ -3,8 +3,8 @@ from transformers import T5Tokenizer, T5ForConditionalGeneration
 
 # Load the tokenizer and model from Hugging Face
 model_name = "jaidixit07/streamlit_deploy"
-
-tokenizer = T5Tokenizer.from_pretrained(model_name)
+token_name="jaidixit07/token"
+tokenizer = T5Tokenizer.from_pretrained(token_name)
 model = T5ForConditionalGeneration.from_pretrained(model_name)
 
 # Streamlit interface
