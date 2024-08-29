@@ -1,43 +1,13 @@
-# import streamlit as st
-# from transformers import T5Tokenizer, T5ForConditionalGeneration
-# import os 
-
-
-# os.environ['HUGGINGFACE_TOKEN'] = "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"
-
-# model_name = "jaidixit07/streamlit_deploy"
-# token_name="jaidixit07/token"
-# tokenizer = T5Tokenizer.from_pretrained(token_name, token=os.getenv('HUGGINGFACE_TOKEN'))
-# model = T5ForConditionalGeneration.from_pretrained(model_name, token=os.getenv('HUGGINGFACE_TOKEN'))
-
-
-# # Streamlit interface
-# st.title("Text Summarization with T5 👨‍💻 ")
-
-# text = st.text_area("Enter text to summarize")
-
-# if st.button("Summarize"):
-#     # Tokenize and summarize the input text
-#     inputs = tokenizer.encode("summarize: " + text, return_tensors="pt", max_length=512, truncation=True)
-#     summary_ids = model.generate(inputs, max_length=150, min_length=40, length_penalty=2.0, num_beams=4, early_stopping=True)
-#     summary = tokenizer.decode(summary_ids[0], skip_special_tokens=True)
-    
-#     # Display the summary
-#     st.write("Summary:", summary)
-
-# # Footer
-# st.write("Developed by Jai Dixit")
-
 import streamlit as st
 from transformers import T5Tokenizer, T5ForConditionalGeneration
-import os
 
-os.environ['HUGGINGFACE_TOKEN'] = "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"
+
+hf_token = st.secrets["HUGGINGFACE_TOKEN"]
 
 model_name = "jaidixit07/streamlit_deploy"
 token_name = "jaidixit07/token"
-tokenizer = T5Tokenizer.from_pretrained(token_name, token=os.getenv('HUGGINGFACE_TOKEN'))
-model = T5ForConditionalGeneration.from_pretrained(model_name, token=os.getenv('HUGGINGFACE_TOKEN'))
+tokenizer = T5Tokenizer.from_pretrained(token_name, token=hf_token)
+model = T5ForConditionalGeneration.from_pretrained(model_name, token=hf_token)
 
 # Streamlit interface
 st.set_page_config(page_title="Advanced Text Summarization", page_icon="📝", layout="wide")
@@ -79,3 +49,6 @@ with st.container():
 st.markdown("---")
 st.write("Developed by **Jai Dixit**")
 st.write("Powered by Hugging Face's T5 model")
+
+
+# By - Jai Dixit
