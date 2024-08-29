@@ -1,15 +1,25 @@
 import streamlit as st
 from transformers import T5Tokenizer, T5ForConditionalGeneration
 import os 
+import subprocess
+import sys
 
+def install_packages():
+    # Upgrade 'accelerate' and reinstall 'transformers' and 'accelerate'
+    subprocess.check_call([sys.executable, '-m', 'pip', 'install', '--upgrade', 'accelerate'])
+    subprocess.check_call([sys.executable, '-m', 'pip', 'uninstall', '-y', 'transformers', 'accelerate'])
+    subprocess.check_call([sys.executable, '-m', 'pip', 'install', 'transformers', 'accelerate'])
+
+# Install the packages
+install_packages()
 # Load the tokenizer and model from Hugging Face
 
 os.environ['HUGGINGFACE_TOKEN'] = "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"
 
 model_name = "jaidixit07/streamlit_deploy"
 token_name="jaidixit07/token"
-tokenizer = T5Tokenizer.from_pretrained(token_name, use_auth_token=os.getenv('HUGGINGFACE_TOKEN'))
-model = T5ForConditionalGeneration.from_pretrained(model_name, use_auth_token=os.getenv('HUGGINGFACE_TOKEN'), timeout=60)
+tokenizer = T5Tokenizer.from_pretrained(token_name, token=os.getenv('HUGGINGFACE_TOKEN'))
+model = T5ForConditionalGeneration.from_pretrained(model_name, token=os.getenv('HUGGINGFACE_TOKEN'))
 
 
 # Streamlit interface
