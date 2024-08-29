@@ -1,30 +1,23 @@
 import streamlit as st
-from transformers import AutoTokenizer, pipeline
-from textSummarization.pipeline.prediction import PredictionPipeline  # Assuming your PredictionPipeline is in a file named prediction_pipeline.py
+from transformers import T5Tokenizer, T5ForConditionalGeneration
 
-# Initialize the Prediction Pipeline
-predictor = PredictionPipeline()
+# Load the tokenizer and model from Hugging Face
+tokenizer = T5Tokenizer.from_pretrained("jaidixit07/streamlit_deploy/artifacts/model_trainer/tokenizer")
+model = T5ForConditionalGeneration.from_pretrained("jaidixit07/streamlit_deploy/artifacts/model_trainer/t5-samsum-model")
 
-# Streamlit app title and description
-st.title("Text Summarization with NLP")
-st.write("This application generates a summary for the given text using a pre-trained NLP model.")
+# Streamlit interface
+st.title("Text Summarization with T5")
 
-# Input text area
-input_text = st.text_area("Enter the text you want to summarize:", height=300)
+text = st.text_area("Enter text to summarize")
 
-# Summarize button
 if st.button("Summarize"):
-    if input_text:
-        # Generate the summary using the prediction pipeline
-        summary = predictor.predict(input_text)
-        # Display the original text and summary
-        st.subheader("Original Text:")
-        st.write(input_text)
-        
-        st.subheader("Summary:")
-        st.write(summary)
-    else:
-        st.write("Please enter some text to summarize.")
+    # Tokenize and summarize the input text
+    inputs = tokenizer.encode("summarize: " + text, return_tensors="pt", max_length=512, truncation=True)
+    summary_ids = model.generate(inputs, max_length=150, min_length=40, length_penalty=2.0, num_beams=4, early_stopping=True)
+    summary = tokenizer.decode(summary_ids[0], skip_special_tokens=True)
+    
+    # Display the summary
+    st.write("Summary:", summary)
 
 # Footer
 st.write("Developed by Jai Dixit")
