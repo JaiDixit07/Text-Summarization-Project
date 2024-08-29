@@ -13,7 +13,7 @@ This repository contains a Streamlit application that leverages the Hugging Face
 ### Clone the Repository
 
 ```bash
-git clone https://github.com/your-username/text-summarization-t5.git
+git clone https://github.com/jaidixit07/text-summarization-t5.git
 cd text-summarization-t5
 ```
 
@@ -46,6 +46,8 @@ streamlit run app.py
 
 The app will be accessible at http://localhost:8501/. Here, you can input text and adjust summarization settings to generate a summary.
 
+![App Screenshot](Images/screenshot.png)
+
 # 🔧 Customization Options
 
 - **Max Length**: Set the maximum length of the summary.
@@ -70,7 +72,7 @@ summary = tokenizer.decode(summary_ids[0], skip_special_tokens=True)
 ```
 
 ## 🤝 Contributing
-Contributions are welcome! If you encounter any issues or have feature requests, please open an issue on the [issues page](https://github.com/your-username/text-summarization-t5/issues).
+Contributions are welcome! If you encounter any issues or have feature requests, please open an issue on the [issues page](https://github.com/jaidixit07/text-summarization-t5/issues).
 
 ## 📝 License
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
