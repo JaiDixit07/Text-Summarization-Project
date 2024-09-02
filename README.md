@@ -44,7 +44,7 @@ To run the Streamlit app locally, execute:
 streamlit run app.py
 ```
 
-The app will be accessible at http://localhost:8501/. Here, you can input text and adjust summarization settings to generate a summary.
+The app will be accessible at http://localhost:8501/. Here, you can input text and adjust summarization settings to generate a summary.The deployed app is accesible at https://shorturl.at/zllR3
 
 ![App Screenshot](Images/screenshot.png)
 
